@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+body {
+    font-family: 'Montserrat', Arial, sans-serif;
+    margin: 0;
+    background-color: #37744b; 
+    /* justify-content: center; */
+    /* align-items: center;
+    height: 100vh; */
+}
+
+.container {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 2.5%;
+    padding-bottom: 2.5%;
+}
+
+.calculator {
+    background-color: #223b2f; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    width: 400px;
+}
+
+.tree {
+    background-color: #ffffff; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.display {
+    width: 95%;
+    height: 60px;
+    font-size: 1.8rem;
+    text-align: right;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #fff0f6; 
+    color: #507c50; 
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.button {
+    padding: 20px;
+    font-size: 1.2rem;
+    text-align: center;
+    background: #8ff4a8; 
+    color: rgb(7, 63, 28);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.button:hover {
+    background: #62f098; 
+}
+
+.button.special {
+    background: #40ec5d; 
+}
+
+.button.special:hover {
+    background: #1bd863; 
+}
+
+h1, h3, h2 {
+    font-family: 'Montserrat', Arial, sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0e884f; 
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.token-tables {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.token-values, .token-frequencies {
+    flex: 1;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #297239;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #fff0f6;
+}
+
+.button.memory {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    grid-column: span 2;
+}
+
+.memory:hover {
+    background-color: #45a049;
+}
+
+#tree-container {
+    width: 100%;
+    height: 500px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}

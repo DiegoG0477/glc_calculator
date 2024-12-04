@@ -1,0 +1,308 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> S
+Rule 1     S -> E
+Rule 2     E -> E SUMA T
+Rule 3     E -> E RESTA T
+Rule 4     E -> T
+Rule 5     T -> T MULT F
+Rule 6     T -> T DIV F
+Rule 7     T -> F
+Rule 8     F -> PAREN_IZQ E PAREN_DER
+Rule 9     F -> N
+Rule 10    N -> DECIMAL
+Rule 11    N -> ENTERO
+
+Terminals, with rules where they appear
+
+DECIMAL              : 10
+DIV                  : 6
+ENTERO               : 11
+MULT                 : 5
+PAREN_DER            : 8
+PAREN_IZQ            : 8
+RESTA                : 3
+SUMA                 : 2
+error                : 
+
+Nonterminals, with rules where they appear
+
+E                    : 1 2 3 8
+F                    : 5 6 7
+N                    : 9
+S                    : 0
+T                    : 2 3 4 5 6
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . S
+    (1) S -> . E
+    (2) E -> . E SUMA T
+    (3) E -> . E RESTA T
+    (4) E -> . T
+    (5) T -> . T MULT F
+    (6) T -> . T DIV F
+    (7) T -> . F
+    (8) F -> . PAREN_IZQ E PAREN_DER
+    (9) F -> . N
+    (10) N -> . DECIMAL
+    (11) N -> . ENTERO
+
+    PAREN_IZQ       shift and go to state 5
+    DECIMAL         shift and go to state 7
+    ENTERO          shift and go to state 8
+
+    S                              shift and go to state 1
+    E                              shift and go to state 2
+    T                              shift and go to state 3
+    F                              shift and go to state 4
+    N                              shift and go to state 6
+
+state 1
+
+    (0) S' -> S .
+
+
+
+state 2
+
+    (1) S -> E .
+    (2) E -> E . SUMA T
+    (3) E -> E . RESTA T
+
+    $end            reduce using rule 1 (S -> E .)
+    SUMA            shift and go to state 9
+    RESTA           shift and go to state 10
+
+
+state 3
+
+    (4) E -> T .
+    (5) T -> T . MULT F
+    (6) T -> T . DIV F
+
+    SUMA            reduce using rule 4 (E -> T .)
+    RESTA           reduce using rule 4 (E -> T .)
+    $end            reduce using rule 4 (E -> T .)
+    PAREN_DER       reduce using rule 4 (E -> T .)
+    MULT            shift and go to state 11
+    DIV             shift and go to state 12
+
+
+state 4
+
+    (7) T -> F .
+
+    MULT            reduce using rule 7 (T -> F .)
+    DIV             reduce using rule 7 (T -> F .)
+    SUMA            reduce using rule 7 (T -> F .)
+    RESTA           reduce using rule 7 (T -> F .)
+    $end            reduce using rule 7 (T -> F .)
+    PAREN_DER       reduce using rule 7 (T -> F .)
+
+
+state 5
+
+    (8) F -> PAREN_IZQ . E PAREN_DER
+    (2) E -> . E SUMA T
+    (3) E -> . E RESTA T
+    (4) E -> . T
+    (5) T -> . T MULT F
+    (6) T -> . T DIV F
+    (7) T -> . F
+    (8) F -> . PAREN_IZQ E PAREN_DER
+    (9) F -> . N
+    (10) N -> . DECIMAL
+    (11) N -> . ENTERO
+
+    PAREN_IZQ       shift and go to state 5
+    DECIMAL         shift and go to state 7
+    ENTERO          shift and go to state 8
+
+    E                              shift and go to state 13
+    T                              shift and go to state 3
+    F                              shift and go to state 4
+    N                              shift and go to state 6
+
+state 6
+
+    (9) F -> N .
+
+    MULT            reduce using rule 9 (F -> N .)
+    DIV             reduce using rule 9 (F -> N .)
+    SUMA            reduce using rule 9 (F -> N .)
+    RESTA           reduce using rule 9 (F -> N .)
+    $end            reduce using rule 9 (F -> N .)
+    PAREN_DER       reduce using rule 9 (F -> N .)
+
+
+state 7
+
+    (10) N -> DECIMAL .
+
+    MULT            reduce using rule 10 (N -> DECIMAL .)
+    DIV             reduce using rule 10 (N -> DECIMAL .)
+    SUMA            reduce using rule 10 (N -> DECIMAL .)
+    RESTA           reduce using rule 10 (N -> DECIMAL .)
+    $end            reduce using rule 10 (N -> DECIMAL .)
+    PAREN_DER       reduce using rule 10 (N -> DECIMAL .)
+
+
+state 8
+
+    (11) N -> ENTERO .
+
+    MULT            reduce using rule 11 (N -> ENTERO .)
+    DIV             reduce using rule 11 (N -> ENTERO .)
+    SUMA            reduce using rule 11 (N -> ENTERO .)
+    RESTA           reduce using rule 11 (N -> ENTERO .)
+    $end            reduce using rule 11 (N -> ENTERO .)
+    PAREN_DER       reduce using rule 11 (N -> ENTERO .)
+
+
+state 9
+
+    (2) E -> E SUMA . T
+    (5) T -> . T MULT F
+    (6) T -> . T DIV F
+    (7) T -> . F
+    (8) F -> . PAREN_IZQ E PAREN_DER
+    (9) F -> . N
+    (10) N -> . DECIMAL
+    (11) N -> . ENTERO
+
+    PAREN_IZQ       shift and go to state 5
+    DECIMAL         shift and go to state 7
+    ENTERO          shift and go to state 8
+
+    T                              shift and go to state 14
+    F                              shift and go to state 4
+    N                              shift and go to state 6
+
+state 10
+
+    (3) E -> E RESTA . T
+    (5) T -> . T MULT F
+    (6) T -> . T DIV F
+    (7) T -> . F
+    (8) F -> . PAREN_IZQ E PAREN_DER
+    (9) F -> . N
+    (10) N -> . DECIMAL
+    (11) N -> . ENTERO
+
+    PAREN_IZQ       shift and go to state 5
+    DECIMAL         shift and go to state 7
+    ENTERO          shift and go to state 8
+
+    T                              shift and go to state 15
+    F                              shift and go to state 4
+    N                              shift and go to state 6
+
+state 11
+
+    (5) T -> T MULT . F
+    (8) F -> . PAREN_IZQ E PAREN_DER
+    (9) F -> . N
+    (10) N -> . DECIMAL
+    (11) N -> . ENTERO
+
+    PAREN_IZQ       shift and go to state 5
+    DECIMAL         shift and go to state 7
+    ENTERO          shift and go to state 8
+
+    F                              shift and go to state 16
+    N                              shift and go to state 6
+
+state 12
+
+    (6) T -> T DIV . F
+    (8) F -> . PAREN_IZQ E PAREN_DER
+    (9) F -> . N
+    (10) N -> . DECIMAL
+    (11) N -> . ENTERO
+
+    PAREN_IZQ       shift and go to state 5
+    DECIMAL         shift and go to state 7
+    ENTERO          shift and go to state 8
+
+    F                              shift and go to state 17
+    N                              shift and go to state 6
+
+state 13
+
+    (8) F -> PAREN_IZQ E . PAREN_DER
+    (2) E -> E . SUMA T
+    (3) E -> E . RESTA T
+
+    PAREN_DER       shift and go to state 18
+    SUMA            shift and go to state 9
+    RESTA           shift and go to state 10
+
+
+state 14
+
+    (2) E -> E SUMA T .
+    (5) T -> T . MULT F
+    (6) T -> T . DIV F
+
+    SUMA            reduce using rule 2 (E -> E SUMA T .)
+    RESTA           reduce using rule 2 (E -> E SUMA T .)
+    $end            reduce using rule 2 (E -> E SUMA T .)
+    PAREN_DER       reduce using rule 2 (E -> E SUMA T .)
+    MULT            shift and go to state 11
+    DIV             shift and go to state 12
+
+
+state 15
+
+    (3) E -> E RESTA T .
+    (5) T -> T . MULT F
+    (6) T -> T . DIV F
+
+    SUMA            reduce using rule 3 (E -> E RESTA T .)
+    RESTA           reduce using rule 3 (E -> E RESTA T .)
+    $end            reduce using rule 3 (E -> E RESTA T .)
+    PAREN_DER       reduce using rule 3 (E -> E RESTA T .)
+    MULT            shift and go to state 11
+    DIV             shift and go to state 12
+
+
+state 16
+
+    (5) T -> T MULT F .
+
+    MULT            reduce using rule 5 (T -> T MULT F .)
+    DIV             reduce using rule 5 (T -> T MULT F .)
+    SUMA            reduce using rule 5 (T -> T MULT F .)
+    RESTA           reduce using rule 5 (T -> T MULT F .)
+    $end            reduce using rule 5 (T -> T MULT F .)
+    PAREN_DER       reduce using rule 5 (T -> T MULT F .)
+
+
+state 17
+
+    (6) T -> T DIV F .
+
+    MULT            reduce using rule 6 (T -> T DIV F .)
+    DIV             reduce using rule 6 (T -> T DIV F .)
+    SUMA            reduce using rule 6 (T -> T DIV F .)
+    RESTA           reduce using rule 6 (T -> T DIV F .)
+    $end            reduce using rule 6 (T -> T DIV F .)
+    PAREN_DER       reduce using rule 6 (T -> T DIV F .)
+
+
+state 18
+
+    (8) F -> PAREN_IZQ E PAREN_DER .
+
+    MULT            reduce using rule 8 (F -> PAREN_IZQ E PAREN_DER .)
+    DIV             reduce using rule 8 (F -> PAREN_IZQ E PAREN_DER .)
+    SUMA            reduce using rule 8 (F -> PAREN_IZQ E PAREN_DER .)
+    RESTA           reduce using rule 8 (F -> PAREN_IZQ E PAREN_DER .)
+    $end            reduce using rule 8 (F -> PAREN_IZQ E PAREN_DER .)
+    PAREN_DER       reduce using rule 8 (F -> PAREN_IZQ E PAREN_DER .)
+
