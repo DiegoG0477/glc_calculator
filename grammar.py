@@ -1,3 +1,4 @@
+import math
 import ply.lex as lex
 import ply.yacc as yacc
 
@@ -11,6 +12,11 @@ tokens = (
     'DIV',
     'PAREN_IZQ',
     'PAREN_DER',
+    'FACTORIAL',
+    'LOG',
+    'PI',
+    'EULER',
+    'PORCENTAJE',
 )
 
 # Expresiones regulares para tokens
@@ -20,6 +26,20 @@ t_MULT = r'\*'
 t_DIV = r'/'
 t_PAREN_IZQ = r'\('
 t_PAREN_DER = r'\)'
+t_FACTORIAL = r'!'
+t_LOG = r'log'
+t_PORCENTAJE = r'%'
+
+# Manejo de constantes
+def t_PI(t):
+    r'π'
+    t.value = math.pi
+    return t
+
+def t_EULER(t):
+    r'e'
+    t.value = math.e
+    return t
 
 # Manejo de números decimales
 def t_DECIMAL(t):
@@ -44,11 +64,11 @@ def t_error(t):
 # Construcción del analizador léxico
 lexer = lex.lex()
 
+# Gramática
 def p_S(p):
     '''S : E'''
     # S apunta a E
-    #p[0] = {"S": p[1]}
-    p[0] = p[1]
+    p[0] = {"S": p[1]}
 
 def p_E_plus(p):
     '''E : E SUMA T'''
@@ -84,6 +104,31 @@ def p_F_group(p):
     '''F : PAREN_IZQ E PAREN_DER'''
     # Nodo F con hijos (, E, )
     p[0] = {"F": ["(", p[2], ")"]}
+
+def p_F_log(p):
+    '''F : LOG PAREN_IZQ E PAREN_DER'''
+    # Nodo F con hijos log, (, E, )
+    p[0] = {"F": ["log", "(", p[3], ")"]}
+
+def p_F_pi(p):
+    '''F : PI'''
+    # Nodo F con constante pi
+    p[0] = {"F": "π"}
+
+def p_F_euler(p):
+    '''F : EULER'''
+    # Nodo F con constante e
+    p[0] = {"F": "e"}
+
+def p_T_percent(p):
+    '''T : T PORCENTAJE F'''
+    # Nodo T con hijos T, %, F
+    p[0] = {"T": [p[1], "%", p[3]]}
+
+def p_F_factorial(p):
+    '''F : F FACTORIAL'''
+    # Nodo F con hijo F y operador factorial
+    p[0] = {"F": [p[1], "!"]}
 
 def p_F_number(p):
     '''F : N'''

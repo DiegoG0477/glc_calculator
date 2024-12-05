@@ -11,29 +11,39 @@ Rule 5     T -> T MULT F
 Rule 6     T -> T DIV F
 Rule 7     T -> F
 Rule 8     F -> PAREN_IZQ E PAREN_DER
-Rule 9     F -> N
-Rule 10    N -> DECIMAL
-Rule 11    N -> ENTERO
+Rule 9     F -> LOG PAREN_IZQ E PAREN_DER
+Rule 10    F -> PI
+Rule 11    F -> EULER
+Rule 12    T -> T PORCENTAJE F
+Rule 13    F -> F FACTORIAL
+Rule 14    F -> N
+Rule 15    N -> DECIMAL
+Rule 16    N -> ENTERO
 
 Terminals, with rules where they appear
 
-DECIMAL              : 10
+DECIMAL              : 15
 DIV                  : 6
-ENTERO               : 11
+ENTERO               : 16
+EULER                : 11
+FACTORIAL            : 13
+LOG                  : 9
 MULT                 : 5
-PAREN_DER            : 8
-PAREN_IZQ            : 8
+PAREN_DER            : 8 9
+PAREN_IZQ            : 8 9
+PI                   : 10
+PORCENTAJE           : 12
 RESTA                : 3
 SUMA                 : 2
 error                : 
 
 Nonterminals, with rules where they appear
 
-E                    : 1 2 3 8
-F                    : 5 6 7
-N                    : 9
+E                    : 1 2 3 8 9
+F                    : 5 6 7 12 13
+N                    : 14
 S                    : 0
-T                    : 2 3 4 5 6
+T                    : 2 3 4 5 6 12
 
 Parsing method: LALR
 
@@ -47,20 +57,28 @@ state 0
     (5) T -> . T MULT F
     (6) T -> . T DIV F
     (7) T -> . F
+    (12) T -> . T PORCENTAJE F
     (8) F -> . PAREN_IZQ E PAREN_DER
-    (9) F -> . N
-    (10) N -> . DECIMAL
-    (11) N -> . ENTERO
+    (9) F -> . LOG PAREN_IZQ E PAREN_DER
+    (10) F -> . PI
+    (11) F -> . EULER
+    (13) F -> . F FACTORIAL
+    (14) F -> . N
+    (15) N -> . DECIMAL
+    (16) N -> . ENTERO
 
     PAREN_IZQ       shift and go to state 5
-    DECIMAL         shift and go to state 7
-    ENTERO          shift and go to state 8
+    LOG             shift and go to state 6
+    PI              shift and go to state 7
+    EULER           shift and go to state 8
+    DECIMAL         shift and go to state 10
+    ENTERO          shift and go to state 11
 
     S                              shift and go to state 1
     E                              shift and go to state 2
     T                              shift and go to state 3
     F                              shift and go to state 4
-    N                              shift and go to state 6
+    N                              shift and go to state 9
 
 state 1
 
@@ -75,8 +93,8 @@ state 2
     (3) E -> E . RESTA T
 
     $end            reduce using rule 1 (S -> E .)
-    SUMA            shift and go to state 9
-    RESTA           shift and go to state 10
+    SUMA            shift and go to state 12
+    RESTA           shift and go to state 13
 
 
 state 3
@@ -84,25 +102,30 @@ state 3
     (4) E -> T .
     (5) T -> T . MULT F
     (6) T -> T . DIV F
+    (12) T -> T . PORCENTAJE F
 
     SUMA            reduce using rule 4 (E -> T .)
     RESTA           reduce using rule 4 (E -> T .)
     $end            reduce using rule 4 (E -> T .)
     PAREN_DER       reduce using rule 4 (E -> T .)
-    MULT            shift and go to state 11
-    DIV             shift and go to state 12
+    MULT            shift and go to state 14
+    DIV             shift and go to state 15
+    PORCENTAJE      shift and go to state 16
 
 
 state 4
 
     (7) T -> F .
+    (13) F -> F . FACTORIAL
 
     MULT            reduce using rule 7 (T -> F .)
     DIV             reduce using rule 7 (T -> F .)
+    PORCENTAJE      reduce using rule 7 (T -> F .)
     SUMA            reduce using rule 7 (T -> F .)
     RESTA           reduce using rule 7 (T -> F .)
     $end            reduce using rule 7 (T -> F .)
     PAREN_DER       reduce using rule 7 (T -> F .)
+    FACTORIAL       shift and go to state 17
 
 
 state 5
@@ -114,195 +137,393 @@ state 5
     (5) T -> . T MULT F
     (6) T -> . T DIV F
     (7) T -> . F
+    (12) T -> . T PORCENTAJE F
     (8) F -> . PAREN_IZQ E PAREN_DER
-    (9) F -> . N
-    (10) N -> . DECIMAL
-    (11) N -> . ENTERO
+    (9) F -> . LOG PAREN_IZQ E PAREN_DER
+    (10) F -> . PI
+    (11) F -> . EULER
+    (13) F -> . F FACTORIAL
+    (14) F -> . N
+    (15) N -> . DECIMAL
+    (16) N -> . ENTERO
 
     PAREN_IZQ       shift and go to state 5
-    DECIMAL         shift and go to state 7
-    ENTERO          shift and go to state 8
+    LOG             shift and go to state 6
+    PI              shift and go to state 7
+    EULER           shift and go to state 8
+    DECIMAL         shift and go to state 10
+    ENTERO          shift and go to state 11
 
-    E                              shift and go to state 13
+    E                              shift and go to state 18
     T                              shift and go to state 3
     F                              shift and go to state 4
-    N                              shift and go to state 6
+    N                              shift and go to state 9
 
 state 6
 
-    (9) F -> N .
+    (9) F -> LOG . PAREN_IZQ E PAREN_DER
 
-    MULT            reduce using rule 9 (F -> N .)
-    DIV             reduce using rule 9 (F -> N .)
-    SUMA            reduce using rule 9 (F -> N .)
-    RESTA           reduce using rule 9 (F -> N .)
-    $end            reduce using rule 9 (F -> N .)
-    PAREN_DER       reduce using rule 9 (F -> N .)
+    PAREN_IZQ       shift and go to state 19
 
 
 state 7
 
-    (10) N -> DECIMAL .
+    (10) F -> PI .
 
-    MULT            reduce using rule 10 (N -> DECIMAL .)
-    DIV             reduce using rule 10 (N -> DECIMAL .)
-    SUMA            reduce using rule 10 (N -> DECIMAL .)
-    RESTA           reduce using rule 10 (N -> DECIMAL .)
-    $end            reduce using rule 10 (N -> DECIMAL .)
-    PAREN_DER       reduce using rule 10 (N -> DECIMAL .)
+    FACTORIAL       reduce using rule 10 (F -> PI .)
+    MULT            reduce using rule 10 (F -> PI .)
+    DIV             reduce using rule 10 (F -> PI .)
+    PORCENTAJE      reduce using rule 10 (F -> PI .)
+    SUMA            reduce using rule 10 (F -> PI .)
+    RESTA           reduce using rule 10 (F -> PI .)
+    $end            reduce using rule 10 (F -> PI .)
+    PAREN_DER       reduce using rule 10 (F -> PI .)
 
 
 state 8
 
-    (11) N -> ENTERO .
+    (11) F -> EULER .
 
-    MULT            reduce using rule 11 (N -> ENTERO .)
-    DIV             reduce using rule 11 (N -> ENTERO .)
-    SUMA            reduce using rule 11 (N -> ENTERO .)
-    RESTA           reduce using rule 11 (N -> ENTERO .)
-    $end            reduce using rule 11 (N -> ENTERO .)
-    PAREN_DER       reduce using rule 11 (N -> ENTERO .)
+    FACTORIAL       reduce using rule 11 (F -> EULER .)
+    MULT            reduce using rule 11 (F -> EULER .)
+    DIV             reduce using rule 11 (F -> EULER .)
+    PORCENTAJE      reduce using rule 11 (F -> EULER .)
+    SUMA            reduce using rule 11 (F -> EULER .)
+    RESTA           reduce using rule 11 (F -> EULER .)
+    $end            reduce using rule 11 (F -> EULER .)
+    PAREN_DER       reduce using rule 11 (F -> EULER .)
 
 
 state 9
+
+    (14) F -> N .
+
+    FACTORIAL       reduce using rule 14 (F -> N .)
+    MULT            reduce using rule 14 (F -> N .)
+    DIV             reduce using rule 14 (F -> N .)
+    PORCENTAJE      reduce using rule 14 (F -> N .)
+    SUMA            reduce using rule 14 (F -> N .)
+    RESTA           reduce using rule 14 (F -> N .)
+    $end            reduce using rule 14 (F -> N .)
+    PAREN_DER       reduce using rule 14 (F -> N .)
+
+
+state 10
+
+    (15) N -> DECIMAL .
+
+    FACTORIAL       reduce using rule 15 (N -> DECIMAL .)
+    MULT            reduce using rule 15 (N -> DECIMAL .)
+    DIV             reduce using rule 15 (N -> DECIMAL .)
+    PORCENTAJE      reduce using rule 15 (N -> DECIMAL .)
+    SUMA            reduce using rule 15 (N -> DECIMAL .)
+    RESTA           reduce using rule 15 (N -> DECIMAL .)
+    $end            reduce using rule 15 (N -> DECIMAL .)
+    PAREN_DER       reduce using rule 15 (N -> DECIMAL .)
+
+
+state 11
+
+    (16) N -> ENTERO .
+
+    FACTORIAL       reduce using rule 16 (N -> ENTERO .)
+    MULT            reduce using rule 16 (N -> ENTERO .)
+    DIV             reduce using rule 16 (N -> ENTERO .)
+    PORCENTAJE      reduce using rule 16 (N -> ENTERO .)
+    SUMA            reduce using rule 16 (N -> ENTERO .)
+    RESTA           reduce using rule 16 (N -> ENTERO .)
+    $end            reduce using rule 16 (N -> ENTERO .)
+    PAREN_DER       reduce using rule 16 (N -> ENTERO .)
+
+
+state 12
 
     (2) E -> E SUMA . T
     (5) T -> . T MULT F
     (6) T -> . T DIV F
     (7) T -> . F
+    (12) T -> . T PORCENTAJE F
     (8) F -> . PAREN_IZQ E PAREN_DER
-    (9) F -> . N
-    (10) N -> . DECIMAL
-    (11) N -> . ENTERO
+    (9) F -> . LOG PAREN_IZQ E PAREN_DER
+    (10) F -> . PI
+    (11) F -> . EULER
+    (13) F -> . F FACTORIAL
+    (14) F -> . N
+    (15) N -> . DECIMAL
+    (16) N -> . ENTERO
 
     PAREN_IZQ       shift and go to state 5
-    DECIMAL         shift and go to state 7
-    ENTERO          shift and go to state 8
+    LOG             shift and go to state 6
+    PI              shift and go to state 7
+    EULER           shift and go to state 8
+    DECIMAL         shift and go to state 10
+    ENTERO          shift and go to state 11
 
-    T                              shift and go to state 14
+    T                              shift and go to state 20
     F                              shift and go to state 4
-    N                              shift and go to state 6
+    N                              shift and go to state 9
 
-state 10
+state 13
 
     (3) E -> E RESTA . T
     (5) T -> . T MULT F
     (6) T -> . T DIV F
     (7) T -> . F
+    (12) T -> . T PORCENTAJE F
     (8) F -> . PAREN_IZQ E PAREN_DER
-    (9) F -> . N
-    (10) N -> . DECIMAL
-    (11) N -> . ENTERO
+    (9) F -> . LOG PAREN_IZQ E PAREN_DER
+    (10) F -> . PI
+    (11) F -> . EULER
+    (13) F -> . F FACTORIAL
+    (14) F -> . N
+    (15) N -> . DECIMAL
+    (16) N -> . ENTERO
 
     PAREN_IZQ       shift and go to state 5
-    DECIMAL         shift and go to state 7
-    ENTERO          shift and go to state 8
+    LOG             shift and go to state 6
+    PI              shift and go to state 7
+    EULER           shift and go to state 8
+    DECIMAL         shift and go to state 10
+    ENTERO          shift and go to state 11
 
-    T                              shift and go to state 15
+    T                              shift and go to state 21
     F                              shift and go to state 4
-    N                              shift and go to state 6
+    N                              shift and go to state 9
 
-state 11
+state 14
 
     (5) T -> T MULT . F
     (8) F -> . PAREN_IZQ E PAREN_DER
-    (9) F -> . N
-    (10) N -> . DECIMAL
-    (11) N -> . ENTERO
+    (9) F -> . LOG PAREN_IZQ E PAREN_DER
+    (10) F -> . PI
+    (11) F -> . EULER
+    (13) F -> . F FACTORIAL
+    (14) F -> . N
+    (15) N -> . DECIMAL
+    (16) N -> . ENTERO
 
     PAREN_IZQ       shift and go to state 5
-    DECIMAL         shift and go to state 7
-    ENTERO          shift and go to state 8
+    LOG             shift and go to state 6
+    PI              shift and go to state 7
+    EULER           shift and go to state 8
+    DECIMAL         shift and go to state 10
+    ENTERO          shift and go to state 11
 
-    F                              shift and go to state 16
-    N                              shift and go to state 6
+    F                              shift and go to state 22
+    N                              shift and go to state 9
 
-state 12
+state 15
 
     (6) T -> T DIV . F
     (8) F -> . PAREN_IZQ E PAREN_DER
-    (9) F -> . N
-    (10) N -> . DECIMAL
-    (11) N -> . ENTERO
+    (9) F -> . LOG PAREN_IZQ E PAREN_DER
+    (10) F -> . PI
+    (11) F -> . EULER
+    (13) F -> . F FACTORIAL
+    (14) F -> . N
+    (15) N -> . DECIMAL
+    (16) N -> . ENTERO
 
     PAREN_IZQ       shift and go to state 5
-    DECIMAL         shift and go to state 7
-    ENTERO          shift and go to state 8
+    LOG             shift and go to state 6
+    PI              shift and go to state 7
+    EULER           shift and go to state 8
+    DECIMAL         shift and go to state 10
+    ENTERO          shift and go to state 11
 
-    F                              shift and go to state 17
-    N                              shift and go to state 6
+    F                              shift and go to state 23
+    N                              shift and go to state 9
 
-state 13
+state 16
+
+    (12) T -> T PORCENTAJE . F
+    (8) F -> . PAREN_IZQ E PAREN_DER
+    (9) F -> . LOG PAREN_IZQ E PAREN_DER
+    (10) F -> . PI
+    (11) F -> . EULER
+    (13) F -> . F FACTORIAL
+    (14) F -> . N
+    (15) N -> . DECIMAL
+    (16) N -> . ENTERO
+
+    PAREN_IZQ       shift and go to state 5
+    LOG             shift and go to state 6
+    PI              shift and go to state 7
+    EULER           shift and go to state 8
+    DECIMAL         shift and go to state 10
+    ENTERO          shift and go to state 11
+
+    F                              shift and go to state 24
+    N                              shift and go to state 9
+
+state 17
+
+    (13) F -> F FACTORIAL .
+
+    FACTORIAL       reduce using rule 13 (F -> F FACTORIAL .)
+    MULT            reduce using rule 13 (F -> F FACTORIAL .)
+    DIV             reduce using rule 13 (F -> F FACTORIAL .)
+    PORCENTAJE      reduce using rule 13 (F -> F FACTORIAL .)
+    SUMA            reduce using rule 13 (F -> F FACTORIAL .)
+    RESTA           reduce using rule 13 (F -> F FACTORIAL .)
+    $end            reduce using rule 13 (F -> F FACTORIAL .)
+    PAREN_DER       reduce using rule 13 (F -> F FACTORIAL .)
+
+
+state 18
 
     (8) F -> PAREN_IZQ E . PAREN_DER
     (2) E -> E . SUMA T
     (3) E -> E . RESTA T
 
-    PAREN_DER       shift and go to state 18
-    SUMA            shift and go to state 9
-    RESTA           shift and go to state 10
+    PAREN_DER       shift and go to state 25
+    SUMA            shift and go to state 12
+    RESTA           shift and go to state 13
 
 
-state 14
+state 19
+
+    (9) F -> LOG PAREN_IZQ . E PAREN_DER
+    (2) E -> . E SUMA T
+    (3) E -> . E RESTA T
+    (4) E -> . T
+    (5) T -> . T MULT F
+    (6) T -> . T DIV F
+    (7) T -> . F
+    (12) T -> . T PORCENTAJE F
+    (8) F -> . PAREN_IZQ E PAREN_DER
+    (9) F -> . LOG PAREN_IZQ E PAREN_DER
+    (10) F -> . PI
+    (11) F -> . EULER
+    (13) F -> . F FACTORIAL
+    (14) F -> . N
+    (15) N -> . DECIMAL
+    (16) N -> . ENTERO
+
+    PAREN_IZQ       shift and go to state 5
+    LOG             shift and go to state 6
+    PI              shift and go to state 7
+    EULER           shift and go to state 8
+    DECIMAL         shift and go to state 10
+    ENTERO          shift and go to state 11
+
+    E                              shift and go to state 26
+    T                              shift and go to state 3
+    F                              shift and go to state 4
+    N                              shift and go to state 9
+
+state 20
 
     (2) E -> E SUMA T .
     (5) T -> T . MULT F
     (6) T -> T . DIV F
+    (12) T -> T . PORCENTAJE F
 
     SUMA            reduce using rule 2 (E -> E SUMA T .)
     RESTA           reduce using rule 2 (E -> E SUMA T .)
     $end            reduce using rule 2 (E -> E SUMA T .)
     PAREN_DER       reduce using rule 2 (E -> E SUMA T .)
-    MULT            shift and go to state 11
-    DIV             shift and go to state 12
+    MULT            shift and go to state 14
+    DIV             shift and go to state 15
+    PORCENTAJE      shift and go to state 16
 
 
-state 15
+state 21
 
     (3) E -> E RESTA T .
     (5) T -> T . MULT F
     (6) T -> T . DIV F
+    (12) T -> T . PORCENTAJE F
 
     SUMA            reduce using rule 3 (E -> E RESTA T .)
     RESTA           reduce using rule 3 (E -> E RESTA T .)
     $end            reduce using rule 3 (E -> E RESTA T .)
     PAREN_DER       reduce using rule 3 (E -> E RESTA T .)
-    MULT            shift and go to state 11
-    DIV             shift and go to state 12
+    MULT            shift and go to state 14
+    DIV             shift and go to state 15
+    PORCENTAJE      shift and go to state 16
 
 
-state 16
+state 22
 
     (5) T -> T MULT F .
+    (13) F -> F . FACTORIAL
 
     MULT            reduce using rule 5 (T -> T MULT F .)
     DIV             reduce using rule 5 (T -> T MULT F .)
+    PORCENTAJE      reduce using rule 5 (T -> T MULT F .)
     SUMA            reduce using rule 5 (T -> T MULT F .)
     RESTA           reduce using rule 5 (T -> T MULT F .)
     $end            reduce using rule 5 (T -> T MULT F .)
     PAREN_DER       reduce using rule 5 (T -> T MULT F .)
+    FACTORIAL       shift and go to state 17
 
 
-state 17
+state 23
 
     (6) T -> T DIV F .
+    (13) F -> F . FACTORIAL
 
     MULT            reduce using rule 6 (T -> T DIV F .)
     DIV             reduce using rule 6 (T -> T DIV F .)
+    PORCENTAJE      reduce using rule 6 (T -> T DIV F .)
     SUMA            reduce using rule 6 (T -> T DIV F .)
     RESTA           reduce using rule 6 (T -> T DIV F .)
     $end            reduce using rule 6 (T -> T DIV F .)
     PAREN_DER       reduce using rule 6 (T -> T DIV F .)
+    FACTORIAL       shift and go to state 17
 
 
-state 18
+state 24
+
+    (12) T -> T PORCENTAJE F .
+    (13) F -> F . FACTORIAL
+
+    MULT            reduce using rule 12 (T -> T PORCENTAJE F .)
+    DIV             reduce using rule 12 (T -> T PORCENTAJE F .)
+    PORCENTAJE      reduce using rule 12 (T -> T PORCENTAJE F .)
+    SUMA            reduce using rule 12 (T -> T PORCENTAJE F .)
+    RESTA           reduce using rule 12 (T -> T PORCENTAJE F .)
+    $end            reduce using rule 12 (T -> T PORCENTAJE F .)
+    PAREN_DER       reduce using rule 12 (T -> T PORCENTAJE F .)
+    FACTORIAL       shift and go to state 17
+
+
+state 25
 
     (8) F -> PAREN_IZQ E PAREN_DER .
 
+    FACTORIAL       reduce using rule 8 (F -> PAREN_IZQ E PAREN_DER .)
     MULT            reduce using rule 8 (F -> PAREN_IZQ E PAREN_DER .)
     DIV             reduce using rule 8 (F -> PAREN_IZQ E PAREN_DER .)
+    PORCENTAJE      reduce using rule 8 (F -> PAREN_IZQ E PAREN_DER .)
     SUMA            reduce using rule 8 (F -> PAREN_IZQ E PAREN_DER .)
     RESTA           reduce using rule 8 (F -> PAREN_IZQ E PAREN_DER .)
     $end            reduce using rule 8 (F -> PAREN_IZQ E PAREN_DER .)
     PAREN_DER       reduce using rule 8 (F -> PAREN_IZQ E PAREN_DER .)
+
+
+state 26
+
+    (9) F -> LOG PAREN_IZQ E . PAREN_DER
+    (2) E -> E . SUMA T
+    (3) E -> E . RESTA T
+
+    PAREN_DER       shift and go to state 27
+    SUMA            shift and go to state 12
+    RESTA           shift and go to state 13
+
+
+state 27
+
+    (9) F -> LOG PAREN_IZQ E PAREN_DER .
+
+    FACTORIAL       reduce using rule 9 (F -> LOG PAREN_IZQ E PAREN_DER .)
+    MULT            reduce using rule 9 (F -> LOG PAREN_IZQ E PAREN_DER .)
+    DIV             reduce using rule 9 (F -> LOG PAREN_IZQ E PAREN_DER .)
+    PORCENTAJE      reduce using rule 9 (F -> LOG PAREN_IZQ E PAREN_DER .)
+    SUMA            reduce using rule 9 (F -> LOG PAREN_IZQ E PAREN_DER .)
+    RESTA           reduce using rule 9 (F -> LOG PAREN_IZQ E PAREN_DER .)
+    $end            reduce using rule 9 (F -> LOG PAREN_IZQ E PAREN_DER .)
+    PAREN_DER       reduce using rule 9 (F -> LOG PAREN_IZQ E PAREN_DER .)
 

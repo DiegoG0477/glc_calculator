@@ -85,4 +85,36 @@
 		<left>D</left>
 		<right>9</right>
 	</production>
+	<production>
+		<left>F</left>
+		<right>F!</right>
+	</production>
+	<production>
+		<left>F</left>
+		<right>log(E)</right>
+	</production>
+	<production>
+		<left>F</left>
+		<right>e</right>
+	</production>
+	<production>
+		<left>F</left>
+		<right>π</right>
+	</production>
+	<production>
+		<left>T</left>
+		<right>T%F</right>
+	</production>
+	<production>
+		<left>B</left>
+		<right>NN</right>
+	</production>
+	<production>
+		<left>B</left>
+		<right>NNN</right>
+	</production>
+	<production>
+		<left>F</left>
+		<right>log(B)</right>
+	</production>
 </structure>
